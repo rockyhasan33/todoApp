@@ -105,7 +105,7 @@ function addTodoFromLocalStorage() {
 
 // Create form 
 
-function createForm() {
+function createForm(isEdited) {
     const formWrapper = createElement('div', 'wrapper_form'); 
     
     let element;
@@ -132,7 +132,7 @@ function createForm() {
                             
                             </label>
                             <div class="form_btn_wrapper">
-                                <button type="submit" class="add_btn">Add Task</button>
+                                <button type="submit" class="add_btn">${isEdited ? 'Update' : 'Add'} Task</button>
                                 <button type="button" class="cancel_btn">Cancel</button>
                             </div>
                         </form>
@@ -292,7 +292,7 @@ function editItem(e) {
     editElement = e.currentTarget.parentElement.previousElementSibling.lastElementChild.firstElementChild;
 
     // creating the form again
-    const createEditForm = createForm();
+    const createEditForm = createForm(isEdited);
     wrapper.appendChild(createEditForm);
     const closeBtn = wrapper.querySelector('.close_btn');
     const grabInputField = createEditForm.querySelector('#title');
