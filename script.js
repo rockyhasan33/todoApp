@@ -10,6 +10,7 @@ let editElement;
 let editID;
 let isEdited = false;
 let grabOptionValue;
+let getOptionValue = 'all';
 
 function setBackToDefault() {
     isEditable = false;
@@ -20,20 +21,25 @@ function setBackToDefault() {
 
 optionSelect.addEventListener('change', todoListChange);
 
-function todoListChange() {
+function todoListChange(e) {
+    
+    if(this.value != undefined) {
+        getOptionValue = this.value;
+    }
     const getLocalStorageTodos = getLocalStorage();
     const todos = todosItemsContainer.querySelectorAll('.todo_item');
     todos.forEach(todo => {
         todo.remove();
     })
+    
 
     getLocalStorageTodos.forEach(todo => {
 
-        if(this.value == 'all') {
+        if(getOptionValue == 'all') {
             let item = setTodo(todo.title, todo.status, todo.time, todo.id);
             todosItemsContainer.appendChild(item);
         }
-        if(this.value == todo.status) {
+        if(getOptionValue == todo.status) {
 
             let item = setTodo(todo.title, todo.status, todo.time, todo.id);
             todosItemsContainer.appendChild(item);
@@ -178,7 +184,7 @@ function formSubmit(e) {
 
     addTodoFromLocalStorage();
 
-    // todoListChange();
+    todoListChange();
 
     // check if todoList is empty 
     isListContainerEmpty();
