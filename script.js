@@ -207,7 +207,7 @@ function setTodo(title, status, time, id) {
                                 <input type="checkbox" ${status == 'complete' && 'checked'} name="" id="checkbox">
                             </div>
                             <div class="title_text">
-                                <p class="text">${title}</p>
+                                <p class="text ${status == 'complete' &&'text_underline'}">${title}</p>
                                 <div class="ydxyy">
                                     <div class="create_time">${time}</div>
                                 </div>

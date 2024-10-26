@@ -224,7 +224,7 @@ button {
     font-weight: 500;
     display: flex;
     flex: 1;
-    color: var(--black-1);
+    color: var(--black-2);
     /* text-wrap: wrap; */
 }
 
@@ -235,7 +235,6 @@ button {
     display: flex;
     align-items: center;
 }
-
 
 .ydxyy {
     display: flex;
@@ -287,4 +286,5 @@ button {
 
 .text_underline {
     text-decoration: line-through;
+    color: var(--black-1);
 }
