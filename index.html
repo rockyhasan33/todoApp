@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Goole Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="heading">TODO LIST</h1>
+        <div class="center">
+            <div class="wrapper">
+                <button class="add_btn" id="popUp">Add Task</button>
+                 <select name="" id="options">
+                    <option value="all">All</option>
+                    <option value="incomplete">Incomplete</option>
+                    <option value="complete">Completed</option>
+                    
+                </select>
+            </div>
+            <div class="wrapper_content">
+                <div class="todo_item_container">
+                    <p class="show_empty">No Todos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
