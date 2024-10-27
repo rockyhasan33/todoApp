@@ -11,6 +11,8 @@ let editID;
 let isEdited = false;
 let grabOptionValue;
 let getOptionValue = 'all';
+let getCheckbox;
+let isCheckboxClicked;
 
 function setBackToDefault() {
     isEditable = false;
@@ -47,10 +49,6 @@ function todoListChange(e) {
 
     })
 
-
-
-
-
     isListContainerEmpty()
 }
 
@@ -77,6 +75,7 @@ function showFormPopUp() {
 
     
 }
+
 
 // add todo from localstorage 
 
@@ -111,7 +110,7 @@ function createForm(isEdited) {
     let element;
     element = `
         <div class="fit_center">
-                        <form class="form">
+                        <form id="form" class="form">
                             <div tabindex="0" class="close_btn" id="closeBtn">
                                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                                     <path fill="none" d="M0 0h24v24H0V0z"></path>
@@ -204,7 +203,7 @@ function setTodo(title, status, time, id) {
     let element = 
                         `<div class="left">
                             <div class="checkbox_">
-                                <input type="checkbox" ${status == 'complete' && 'checked'} name="" id="checkbox">
+                                <input class="checkbox" type="checkbox" ${status == 'complete' && 'checked'} name="input_checkbox" >
                             </div>
                             <div class="title_text">
                                 <p class="text ${status == 'complete' &&'text_underline'}">${title}</p>
@@ -233,7 +232,7 @@ function setTodo(title, status, time, id) {
 
     const editBtn = todoItemParent.querySelector('.edit_btn');
     const deleteBtn = todoItemParent.querySelector('.delete_btn');
-    const checkClick = todoItemParent.querySelector('#checkbox');
+    const checkClick = todoItemParent.querySelector('.checkbox');
 
     // EditBtn eventListener
     editBtn.addEventListener('click', editItem);
@@ -287,6 +286,8 @@ function editItem(e) {
     isEdited = true;
     let value = e.currentTarget.parentElement.previousElementSibling.lastElementChild.firstElementChild.textContent;
 
+    getCheckbox =  e.currentTarget.parentElement.previousElementSibling.firstElementChild.firstElementChild;
+
     editID = e.currentTarget.parentElement.parentElement.getAttribute('data-id');
 
     editElement = e.currentTarget.parentElement.previousElementSibling.lastElementChild.firstElementChild;
@@ -314,10 +315,31 @@ function editItem(e) {
     // select option container
 
     const selectOptions = createEditForm.querySelector('#status');
-    grabOptionValue = selectOptions;
+    // getLocalStorageData for option clicked;
+
+    let getLocalStorageData = getLocalStorage();
+    getLocalStorageData.forEach(todo => {
+        if(todo.id == editID) {
+            if(todo.status == 'incomplete') {
+                selectOptions[0].selected = true;
+            }else {
+                selectOptions[1].selected = true;
+            }
+            
+        }
+    })
+    selectOptions.addEventListener('change', onOptionChange);
      
     
 
+}
+
+function onOptionChange() {
+    
+    if(this.value != undefined) {
+        isCheckboxClicked = this.value;
+    }
+    
 }
 
 function clickOnCheckbox() {
@@ -332,9 +354,6 @@ function clickOnCheckbox() {
     localStorage.setItem("todoList", JSON.stringify(getLocalStorageData));
 
     todoListChange();
-
-
-    
 }
 
 
@@ -349,12 +368,22 @@ function getLocalStorage() {
 
 function editTodoSubmit(e) {
     e.preventDefault();
+
+    
     let value = e.currentTarget.parentElement.previousElementSibling.previousElementSibling.firstElementChild.value;
     editElement.textContent = value;
     let getLocalStorageData = getLocalStorage();
     let getAllTodoItem = getLocalStorageData.map(todo => {
+        
         if(todo.id == editID) {
             todo.title = value;
+            todo.status = isCheckboxClicked;
+            if(todo.status == 'complete') {
+                getCheckbox.checked = true;
+            }else {
+                getCheckbox.checked = false;
+            }
+
         }
 
         return todo;
@@ -364,6 +393,7 @@ function editTodoSubmit(e) {
     const wrapperForm = wrapper.querySelector('.wrapper_form');
     wrapperForm.remove();
     setBackToDefault();
+    todoListChange();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
